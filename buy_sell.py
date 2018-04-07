@@ -74,20 +74,20 @@ class BuySell(object):
                                 print('\n')
 
     def sell_on_fall(self):
-        # try:
-        for pair in self.get_hodl_bags():
-            pending_order = my_bittrex.get_open_orders(pair)['result']
-            x = 10
-            if pair in all_pairs.get_current_pairs() and len(all_pairs.crypto_pc_data(pair, x)) == x:
-                data = all_pairs.crypto_pc_data(pair, x, 2)
-                if percent_change.downtrend(data) == True:
-                    balance_result = my_bittrex.get_balance(pair)['result']
-                    if balance_result is not None:
-                        print('selling '+pair)
-                        res = my_bittrex.sell_limit(pair, balance_result['Balance'], self.get_price(pair, 'Bid'))
-                        print(res)
-        # except Exception as e:
-        #     print(e)
+        try:
+            for pair in self.get_hodl_bags():
+                pending_order = my_bittrex.get_open_orders(pair)['result']
+                x = 10
+                if pair in all_pairs.get_current_pairs() and len(all_pairs.crypto_pc_data(pair, x)) == x:
+                    data = all_pairs.crypto_pc_data(pair, x, 2)
+                    if percent_change.downtrend(data) == True:
+                        balance_result = my_bittrex.get_balance(pair)['result']
+                        if balance_result is not None:
+                            print('selling '+pair)
+                            res = my_bittrex.sell_limit(pair, balance_result['Balance'], self.get_price(pair, 'Bid'))
+                            print(res)
+        except Exception as e:
+            print(e)
 
 
     def arbitrage_sell(self):
