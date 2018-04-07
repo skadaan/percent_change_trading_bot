@@ -8,7 +8,6 @@ import time
 from percent_change_data import PercentChangeData
 from linear_prediction import LinearPrediction
 
-
 my_bittrex = Bittrex('pub', 'pri')
 all_pairs = AllPairs()
 percent_change = PercentChangeData()
@@ -23,7 +22,7 @@ class BuySell(object):
         for pair in all_pairs.get_current_pairs('data'):
             x = 2
             try:
-                data = all_pairs.crypto_pc_data(pair, x , 2)
+                data = all_pairs.crypto_pc_data(pair, x, 2)
                 if pair not in buy_pairs and pair not in open_buy_orders and pair in all_pairs.get_current_pairs('ticker_data'):
                     predict_data = linear_prediction.percent_out(pair, 4)
                     if len(data) == x and predict_data is not None:
@@ -60,7 +59,7 @@ class BuySell(object):
             if pair not in buy_pairs and pair not in open_buy_orders and pair not in x_list:
                 if self.total_coins_in_bitcoin(pair) < .0007:
                     predict_data = linear_prediction.percent_out(pair, 3.5)
-                    if predict_data != None:
+                    if predict_data is not None:
                         predict_low = float(self.format_float(predict_data['predict_low']))
                         predict_close = float(self.format_float(predict_data['predict_close']))
                         last_close = float(self.format_float(predict_data['close']))
@@ -80,7 +79,7 @@ class BuySell(object):
                 x = 10
                 if pair in all_pairs.get_current_pairs() and len(all_pairs.crypto_pc_data(pair, x)) == x:
                     data = all_pairs.crypto_pc_data(pair, x, 2)
-                    if percent_change.downtrend(data) == True:
+                    if percent_change.downtrend(data) is True:
                         balance_result = my_bittrex.get_balance(pair)['result']
                         if balance_result is not None:
                             print('selling '+pair)
@@ -88,7 +87,6 @@ class BuySell(object):
                             print(res)
         except Exception as e:
             print(e)
-
 
     def arbitrage_sell(self):
         try:
@@ -111,7 +109,6 @@ class BuySell(object):
             print(hodling)
             print(e)
 
-
     def cancel_old_orders(self):
         try:
             if len(my_bittrex.get_open_orders()['result']) > 0:
@@ -126,7 +123,6 @@ class BuySell(object):
         except Exception as e:
             # print('error with coin: ' +buy_order['Exchange'] + '\n')
             print(e)
-
 
     def old_coins(self):
         try:
@@ -150,9 +146,8 @@ class BuySell(object):
                             sell_at_loss = my_bittrex.sell_limit(pair, balance, bid)
                             time.sleep(3)
         except Exception as e:
-            print('error with coin: ' +buy_order['Exchange'] + '\n')
+            print('error with coin: ' + buy_order['Exchange'] + '\n')
             print(e)
-
 
     def get_hodl_bags(self):
         try:
@@ -164,8 +159,6 @@ class BuySell(object):
         except Exception as e:
             print(e)
 
-
-
     def open_buy_orders(self):
         pending_order = my_bittrex.get_open_orders()
         open_buy_orders = []
@@ -175,14 +168,13 @@ class BuySell(object):
 
         return open_buy_orders
 
-
     def get_price(self, pair, type):
         crypto = my_bittrex.get_marketsummary(pair)['result'][0]
         return crypto[type]
 
     def buy_price(self, pair, type, low=None):
         price = self.get_price(pair, type)
-        if low != None:
+        if low is not None:
             low_price = price * low
             bid_price = price - low_price
         return price
@@ -196,11 +188,9 @@ class BuySell(object):
                     coin_balanace = coins['Available']
         return (coin_balanace * coin_current_price[0]['Last'])
 
-
     def format_float(self, f):
         # return format(f, '.8f')
         return '{:.8f}'.format(f)
-
 
     def units_order(self, last):
         return 0.0011 / last

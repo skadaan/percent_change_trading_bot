@@ -38,7 +38,7 @@ class LinearPrediction(object):
 
     def forecast_out(self, dt, pair):
         df = pd.read_csv("ticker_data/"+pair+".csv", index_col=0)
-        df = df[['OPEN', 'CLOSE', 'HIGH', 'LOW',]]
+        df = df[['OPEN', 'CLOSE', 'HIGH', 'LOW', ]]
         df['HL_PCT'] = ((df['LOW'] / df['HIGH']) -1) * 100 * -1
         df['PCT_Change'] = (df['CLOSE'] - df['OPEN']) / df['OPEN'] * 100
         df = df[['CLOSE', 'HIGH', 'LOW', 'HL_PCT', 'PCT_Change']]
