@@ -9,7 +9,7 @@ from percent_change_data import PercentChangeData
 from linear_prediction import LinearPrediction
 
 
-my_bittrex = Bittrex('e7a00484796e4016b67a2c2264b14711', 'd0436371ccdb4465bd2ea3b5164786ee')
+my_bittrex = Bittrex('pub', 'pri')
 all_pairs = AllPairs()
 percent_change = PercentChangeData()
 linear_prediction = LinearPrediction()

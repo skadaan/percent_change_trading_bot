@@ -9,8 +9,8 @@ import datetime
 from dateutil import parser
 import time
 
-my_bittrex = Bittrex('e7a00484796e4016b67a2c2264b14711', 'd0436371ccdb4465bd2ea3b5164786ee')
-V2_bittrex = Bittrex('e7a00484796e4016b67a2c2264b14711', 'd0436371ccdb4465bd2ea3b5164786ee',api_version='v2.0')
+my_bittrex = Bittrex('pub', 'pri')
+V2_bittrex = Bittrex('pub', 'pri',api_version='v2.0')
 all_pairs = AllPairs()
 
 
